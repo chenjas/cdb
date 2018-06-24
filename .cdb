@@ -1,0 +1,53 @@
+function cdc() {
+	USAGE="Usage: cdc [bookmark]";
+	if [ "$#" -ne 1 ]; then
+		echo "$USAGE";
+		return 1;
+	fi
+	if [ ! -e ~/.cd_bookmarks ]; then
+		mkdir ~/.cd_bookmarks
+	fi
+	if [ ! -f ~/.cd_bookmarks/$1 ]; then
+		echo "cd `pwd`" > ~/.cd_bookmarks/"$1";
+	else
+		echo "Bookmark '$1' already exists";
+	fi
+}
+
+function cdg() {
+	USAGE="Usage: cdg [bookmark]";
+	if [ "$#" -ne 1 ]; then
+		echo "$USAGE";
+		return 1;
+	fi
+	if [ -f ~/.cd_bookmarks/$1 ]; then 
+		source ~/.cd_bookmarks/"$1"
+	else
+		echo "Bookmark '$1' does not exist." ;
+	fi
+}
+
+function cdl() {
+	USAGE="Usage: cdl";
+	if [ "$#" -ne 0 ]; then
+		echo "$USAGE";
+		return 1;
+	fi
+	if [ ! -e ~/.cd_bookmarks ]; then
+		mkdir ~/.cd_bookmarks
+	fi
+    ls -1 ~/.cd_bookmarks/;
+}
+
+function cdd() {
+	USAGE="Usage: cdd [bookmark]";
+	if [ "$#" -ne 1 ]; then
+		echo "$USAGE";
+		return 1;
+	fi
+	if [ -f ~/.cd_bookmarks/$1 ]; then 
+		rm ~/.cd_bookmarks/"$1";
+	else
+		echo "Bookmark '$1' does not exist";
+	fi
+}
